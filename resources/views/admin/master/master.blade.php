@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="{{ url(mix('backend/assets/css/libs.css')) }}">
     <link rel="stylesheet" href="{{url(mix('backend/assets/css/boot.css'))}}"/>
     <link rel="stylesheet" href="{{ url(mix('backend/assets/css/style.css')) }}"/>
+
+    @hasSection('css')
+        @yield('css')
+    @endif
+
+
     <link rel="icon" type="image/png" href="{{ url('backend/assets/images/favicon.png') }}"/>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -31,7 +37,7 @@
             <img class="dash_sidebar_user_thumb" src="{{url(asset('backend/assets/images/avatar.jpg'))}}" alt="" title=""/>
 
             <h1 class="dash_sidebar_user_name">
-                <a href="">Gustavo Web</a>
+                <a href="">Lucas Dauto</a>
             </h1>
         </article>
 
@@ -93,5 +99,9 @@
 <script src="{{ url(mix('backend/assets/js/libs.js')) }}"></script>
 <script src="{{ url(mix('backend/assets/js/scripts.js')) }}"></script>
 
+
+@hasSection('js')
+    @yield('js')
+@endif
 </body>
 </html>
