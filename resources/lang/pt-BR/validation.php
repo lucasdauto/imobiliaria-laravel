@@ -172,6 +172,26 @@ return [
         'title' => 'título',
         'username' => 'usuário',
         'year' => 'ano',
+
+        // Person
+        'genre' => 'gênero',
+        'document' => 'CPF',
+        'document secondary' => 'RG',
+        'document_secondary_complement' => 'Órgão Expedidor',
+        'date_of_birth' => 'data de nascimmento',
+        'place_of_birth' => 'naturalidade',
+        'occupation' => 'profissão',
+        'income' => 'renda',
+        'company_work' => 'empresa',
+        'zipcode' => 'CEP',
+        'street' => 'endereço',
+        'number' => 'número',
+        'neighborhood' => 'bairro',
+        'telephone' => 'telefone',
+        'cell' => 'celular',
+
+
+
     ],
 
 ];

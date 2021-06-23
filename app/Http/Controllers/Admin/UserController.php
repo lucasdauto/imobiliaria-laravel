@@ -4,6 +4,7 @@ namespace LaraDev\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use LaraDev\Http\Controllers\Controller;
+use LaraDev\Http\Requests\Admin\User as UserRequest;
 
 class UserController extends Controller
 {
@@ -38,9 +39,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -72,7 +73,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         //
     }
