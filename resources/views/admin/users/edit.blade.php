@@ -4,7 +4,7 @@
     <section class="dash_content_app">
 
         <header class="dash_content_app_header">
-            <h2 class="icon-user-plus">Novo Cliente</h2>
+            <h2 class="icon-user-plus">Editar Cliente</h2>
 
             <div class="dash_content_app_header_actions">
                 <nav class="dash_content_app_breadcrumb">
@@ -13,7 +13,7 @@
                         <li class="separator icon-angle-right icon-notext"></li>
                         <li><a href="">Clientes</a></li>
                         <li class="separator icon-angle-right icon-notext"></li>
-                        <li><a href="" class="text-orange">Novo Cliente</a></li>
+                        <li><a href="" class="text-orange">Editar Cliente</a></li>
                     </ul>
                 </nav>
             </div>
@@ -45,28 +45,28 @@
                     </li>
                 </ul>
 
-                <form class="app_form" action="{{ route('admin.users.store') }}" method="post"
+                <form class="app_form" action="{{ route('admin.users.update', ['user'=>$user->id]) }}" method="post"
                       enctype="multipart/form-data">
                     @csrf
-
+                    @method('PUT')
                     <div class="nav_tabs_content">
                         <div id="data">
                             <div class="label_gc">
                                 <span class="legend">Perfil:</span>
                                 <label class="label">
                                     <input type="checkbox"
-                                           name="lessor" {{ old('lessor') == 'on' || old('lessor') == true ? 'checked' : '' }}><span>Locatário</span>
+                                           name="lessor" {{ old('lessor') == 'on' || old('lessor') == true ? 'checked' : ($user->lessor == 1 ? 'checked' : '') }}><span>Locatário</span>
                                 </label>
 
                                 <label class="label">
                                     <input type="checkbox"
-                                           name="lessee" {{ old('lessee') == 'on' || old('lessee') == true ? 'checked' : '' }}><span>Locador</span>
+                                           name="lessee" {{ old('lessee') == 'on' || old('lessee') == true ? 'checked' : ($user->lessee == 1 ? 'checked' :'') }}><span>Locador</span>
                                 </label>
                             </div>
 
                             <label class="label">
                                 <span class="legend">*Nome:</span>
-                                <input type="text" name="name" placeholder="Nome Completo" value="{{ old('name') }}"/>
+                                <input type="text" name="name" placeholder="Nome Completo" value="{{ old('name') ?? $user->name }}"/>
                             </label>
 
                             <div class="label_g2">
@@ -74,12 +74,12 @@
                                     <span class="legend">*Genero:</span>
                                     <select name="genre">
                                         <option value="">Selecione uma opção</option>
-                                        <option value="male" {{ old('genre') == 'male' ? 'selected' : '' }}>Masculino
+                                        <option value="male" {{ old('genre') == 'male' ? 'selected' : ($user->genre == 'male' ? 'selected' : '') }}>Masculino
                                         </option>
-                                        <option value="female" {{ old('genre') == 'female' ? 'selected' : '' }}>
+                                        <option value="female" {{ old('genre') == 'female' ? 'selected' : ($user->genre == 'female' ? 'selected' : '') }}>
                                             Feminino
                                         </option>
-                                        <option value="other" {{ old('genre') == 'other' ? 'selected'  : '' }}>Outros
+                                        <option value="other" {{ old('genre') == 'other' ? 'selected'  : ($user->genre == 'other' ? 'selected' : '') }}>Outros
                                         </option>
                                     </select>
                                 </label>
@@ -87,7 +87,7 @@
                                 <label class="label">
                                     <span class="legend">*CPF:</span>
                                     <input type="tel" class="mask-doc" name="document" placeholder="CPF do Cliente"
-                                           value="{{ old('document') }}"/>
+                                           value="{{ old('document') ?? $user->document }}"/>
                                 </label>
                             </div>
 
@@ -95,13 +95,13 @@
                                 <label class="label">
                                     <span class="legend">*RG:</span>
                                     <input type="text" name="document_secondary" placeholder="RG do Cliente"
-                                           value="{{ old('document_secondary') }}"/>
+                                           value="{{ old('document_secondary') ?? $user->document_secondary }}"/>
                                 </label>
 
                                 <label class="label">
                                     <span class="legend">Órgão Expedidor:</span>
                                     <input type="text" name="document_secondary_complement" placeholder="Expedição"
-                                           value="{{ old('document_secondary_complement') }}"/>
+                                           value="{{ old('document_secondary_complement') ?? $user->document_secondary_complement }}"/>
                                 </label>
                             </div>
 
@@ -109,13 +109,13 @@
                                 <label class="label">
                                     <span class="legend">*Data de Nascimento:</span>
                                     <input type="tel" name="date_of_birth" class="mask-date"
-                                           placeholder="Data de Nascimento" value="{{ old('date_of_birth') }}"/>
+                                           placeholder="Data de Nascimento" value="{{ old('date_of_birth') ?? $user->date_of_birth }}"/>
                                 </label>
 
                                 <label class="label">
                                     <span class="legend">*Naturalidade:</span>
                                     <input type="text" name="place_of_birth" placeholder="Cidade de Nascimento"
-                                           value="{{ old('place_of_birth') }}"/>
+                                           value="{{ old('place_of_birth') ?? $user->place_of_birth }}"/>
                                 </label>
                             </div>
 
@@ -125,25 +125,25 @@
                                     <select name="civil_status">
                                         <optgroup label="Cônjuge Obrigatório">
                                             <option
-                                                value="married" {{ old('civil_status') == 'married' ? 'selected' : '' }}>
+                                                value="married" {{ old('civil_status') == 'married' ? 'selected' : ($user->civil_status == 'married' ? 'selected' : '') }}>
                                                 Casado
                                             </option>
                                             <option
-                                                value="separated" {{ old('civil_status') == 'separated' ? 'selected' : '' }}>
+                                                value="separated" {{ old('civil_status') == 'separated' ? 'selected' : ($user->civil_status == 'separated' ? 'selected' : '') }}>
                                                 Separado
                                             </option>
                                         </optgroup>
                                         <optgroup label="Cônjuge não Obrigatório">
                                             <option
-                                                value="single" {{  old('civil_status') == 'single' ? 'selected' : ''  }}>
+                                                value="single" {{  old('civil_status') == 'single' ? 'selected' : ($user->civil_status == 'single' ? 'selected' : '')  }}>
                                                 Solteiro
                                             </option>
                                             <option
-                                                value="divorced" {{  old('civil_status') == 'divorced' ? 'selected' : ''  }}>
+                                                value="divorced" {{  old('civil_status') == 'divorced' ? 'selected' : ($user->civil_status == 'divorced' ? 'selected' : '')  }}>
                                                 Divorciado
                                             </option>
                                             <option
-                                                value="widower" {{  old('civil_status') == 'widower' ? 'selected' : ''  }}>
+                                                value="widower" {{  old('civil_status') == 'widower' ? 'selected' : ($user->civil_status == 'widower' ? 'selected' : '')  }}>
                                                 Viúvo
                                             </option>
                                         </optgroup>
@@ -167,20 +167,20 @@
                                         <label class="label">
                                             <span class="legend">*Profissão:</span>
                                             <input type="text" name="occupation" placeholder="Profissão do Cliente"
-                                                   value="{{ old('occupation') }}"/>
+                                                   value="{{ old('occupation') ?? $user->occupation }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">*Renda:</span>
                                             <input type="tel" name="income" class="mask-money"
-                                                   placeholder="Valores em Reais" value="{{ old('income') }}"/>
+                                                   placeholder="Valores em Reais" value="{{ old('income') ?? $user->income }}"/>
                                         </label>
                                     </div>
 
                                     <label class="label">
                                         <span class="legend">*Empresa:</span>
                                         <input type="text" name="company_work" placeholder="Contratante"
-                                               value="{{ old('company_work') }}"/>
+                                               value="{{ old('company_work') ?? $user->company_work }}"/>
                                     </label>
                                 </div>
                             </div>
@@ -196,47 +196,47 @@
                                         <label class="label">
                                             <span class="legend">*CEP:</span>
                                             <input type="tel" name="zipcode" class="mask-zipcode zip_code_search"
-                                                   placeholder="Digite o CEP" value="{{ old('zipcode') }}"/>
+                                                   placeholder="Digite o CEP" value="{{ old('zipcode') ?? $user->zipcode }}"/>
                                         </label>
                                     </div>
 
                                     <label class="label">
                                         <span class="legend">*Endereço:</span>
                                         <input type="text" name="street" class="street"
-                                               placeholder="Endereço Completo" value="{{ old('street') }}"/>
+                                               placeholder="Endereço Completo" value="{{ old('street') ?? $user->street }}"/>
                                     </label>
 
                                     <div class="label_g2">
                                         <label class="label">
                                             <span class="legend">*Número:</span>
                                             <input type="text" name="number" placeholder="Número do Endereço"
-                                                   value="{{ old('number') }}"/>
+                                                   value="{{ old('number') ?? $user->number }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">Complemento:</span>
                                             <input type="text" name="complement" placeholder="Completo (Opcional)"
-                                                   value="{{ old('complement') }}"/>
+                                                   value="{{ old('complement') ?? $user->complement }}"/>
                                         </label>
                                     </div>
 
                                     <label class="label">
                                         <span class="legend">*Bairro:</span>
                                         <input type="text" name="neighborhood" class="neighborhood"
-                                               placeholder="Bairro" value="{{ old('neighborhood') }}"/>
+                                               placeholder="Bairro" value="{{ old('neighborhood') ?? $user->neighborhood }}"/>
                                     </label>
 
                                     <div class="label_g2">
                                         <label class="label">
                                             <span class="legend">*Estado:</span>
                                             <input type="text" name="state" class="state" placeholder="Estado"
-                                                   value="{{ old('state') }}"/>
+                                                   value="{{ old('state') ?? $user->state }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">*Cidade:</span>
                                             <input type="text" name="city" class="city" placeholder="Cidade"
-                                                   value="{{ old('city') }}"/>
+                                                   value="{{ old('city') ?? $user->city }}"/>
                                         </label>
                                     </div>
                                 </div>
@@ -254,13 +254,13 @@
                                             <span class="legend">Residencial:</span>
                                             <input type="tel" name="telephone" class="mask-phone"
                                                    placeholder="Número do Telefonce com DDD"
-                                                   value="{{ old('telephone') }}"/>
+                                                   value="{{ old('telephone') ?? $user->telephone }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">*Celular:</span>
                                             <input type="tel" name="cell" class="mask-cell"
-                                                   placeholder="Número do Telefonce com DDD" value="{{ old('cell') }}"/>
+                                                   placeholder="Número do Telefonce com DDD" value="{{ old('cell') ?? $user->cell }}"/>
                                         </label>
                                     </div>
                                 </div>
@@ -277,7 +277,7 @@
                                         <label class="label">
                                             <span class="legend">*E-mail:</span>
                                             <input type="email" name="email" placeholder="Melhor e-mail"
-                                                   value="{{ old('email') }}"/>
+                                                   value="{{ old('email') ?? $user->email }}"/>
                                         </label>
 
                                         <label class="label">
@@ -303,19 +303,19 @@
                                         <span class="legend">Tipo de Comunhão:</span>
                                         <select name="type_of_communion" class="select2">
                                             <option
-                                                value="Comunhão Universal de Bens" {{ old('type_of_communion') == 'Comunhão Universal de Bens' ? 'selected' : '' }}>
+                                                value="Comunhão Universal de Bens" {{ old('type_of_communion') == 'Comunhão Universal de Bens' ? 'selected' : ($user->type_of_communion == 'Comunhão Universal de Bens' ? 'selected' : '') }}>
                                                 Comunhão Universal de Bens
                                             </option>
                                             <option
-                                                value="Comunhão Parcial de Bens" {{ old('type_of_communion') == 'Comunhão Parcial de Bens' ? 'selected' : '' }}>
+                                                value="Comunhão Parcial de Bens" {{ old('type_of_communion') == 'Comunhão Parcial de Bens' ? 'selected' : ($user->type_of_communion == 'Comunhão Parcial de Bens' ? 'selected' : '') }}>
                                                 Comunhão Parcial de Bens
                                             </option>
                                             <option
-                                                value="Separação Total de Bens" {{ old('type_of_communion') == 'Separação Total de Bens' ? 'selected' : '' }}>
+                                                value="Separação Total de Bens" {{ old('type_of_communion') == 'Separação Total de Bens' ? 'selected' : ($user->type_of_communion == 'Separação Total de Bens' ? 'selected' : '') }}>
                                                 Separação Total de Bens
                                             </option>
                                             <option
-                                                value="Participação Final de Aquestos" {{ old('type_of_communion') == 'Participação Final de Aquestos' ? 'selected' : '' }}>
+                                                value="Participação Final de Aquestos" {{ old('type_of_communion') == 'Participação Final de Aquestos' ? 'selected' : ($user->type_of_communion == 'Participação Final de Aquestos' ? 'selected' : '') }}>
                                                 Participação Final de Aquestos
                                             </option>
                                         </select>
@@ -324,7 +324,7 @@
                                     <label class="label">
                                         <span class="legend">Nome:</span>
                                         <input type="text" name="spouse_name" placeholder="Nome do Cônjuge"
-                                               value="{{ old('spouse_name') }}"/>
+                                               value="{{ old('spouse_name') ?? $user->spouse_name }}"/>
                                     </label>
 
                                     <div class="label_g2">
@@ -333,15 +333,15 @@
                                             <select name="spouse_genre">
                                                 <option value="">Selecione uma opção</option>
                                                 <option
-                                                    value="male" {{ old('spouse_genre') == 'male' ? 'selected' : '' }}>
+                                                    value="male" {{ old('spouse_genre') == 'male' ? 'selected' : ($user->spouse_genre == 'male' ? 'selected' : '') }}>
                                                     Masculino
                                                 </option>
                                                 <option
-                                                    value="female" {{ old('spouse_genre') == 'female' ? 'selected' : '' }}>
+                                                    value="female" {{ old('spouse_genre') == 'female' ? 'selected' : ($user->spouse_genre == 'female' ? 'selected' : '') }}>
                                                     Feminino
                                                 </option>
                                                 <option
-                                                    value="other" {{ old('spouse_genre') == 'other' ? 'selected'  : '' }}>
+                                                    value="other" {{ old('spouse_genre') == 'other' ? 'selected'  : ($user->spouse_genre == 'other' ? 'selected' : '') }}>
                                                     Outros
                                                 </option>
                                             </select>
@@ -350,7 +350,7 @@
                                         <label class="label">
                                             <span class="legend">CPF:</span>
                                             <input type="text" class="mask-doc" name="spouse_document"
-                                                   placeholder="CPF do Cliente" value="{{ old('spouse_document') }}"/>
+                                                   placeholder="CPF do Cliente" value="{{ old('spouse_document') ?? $user->spouse_document }}"/>
                                         </label>
                                     </div>
 
@@ -358,13 +358,13 @@
                                         <label class="label">
                                             <span class="legend">RG:</span>
                                             <input type="text" name="spouse_document_secondary"
-                                                   placeholder="RG do Cliente" value="{{ old('spouse_document_secondary') }}"/>
+                                                   placeholder="RG do Cliente" value="{{ old('spouse_document_secondary') ?? $user->spouse_document_secondary }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">Órgão Expedidor:</span>
                                             <input type="text" name="spouse_document_secondary_complement"
-                                                   placeholder="Expedição" value="{{ old('spouse_document_secondary_complement') }}"/>
+                                                   placeholder="Expedição" value="{{ old('spouse_document_secondary_complement') ?? $user->spouse_document_secondary_complement }}"/>
                                         </label>
                                     </div>
 
@@ -372,13 +372,13 @@
                                         <label class="label">
                                             <span class="legend">Data de Nascimento:</span>
                                             <input type="tel" class="mask-date" name="spouse_date_of_birth"
-                                                   placeholder="Data de Nascimento" value="{{ old('spouse_date_of_birth') }}"/>
+                                                   placeholder="Data de Nascimento" value="{{ old('spouse_date_of_birth') ?? $user->spouse_date_of_birth }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">Naturalidade:</span>
                                             <input type="text" name="spouse_place_of_birth"
-                                                   placeholder="Cidade de Nascimento" value="{{ old('spouse_place_of_birth') }}"/>
+                                                   placeholder="Cidade de Nascimento" value="{{ old('spouse_place_of_birth') ?? $user->spouse_place_of_birth }}"/>
                                         </label>
                                     </div>
 
@@ -386,20 +386,20 @@
                                         <label class="label">
                                             <span class="legend">Profissão:</span>
                                             <input type="text" name="spouse_occupation"
-                                                   placeholder="Profissão do Cliente" value="{{ old('spouse_occupation') }}"/>
+                                                   placeholder="Profissão do Cliente" value="{{ old('spouse_occupation') ?? $user->spouse_occupation }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">Renda:</span>
                                             <input type="text" class="mask-money" name="spouse_income"
-                                                   placeholder="Valores em Reais" value="{{ old('spouse_income') }}"/>
+                                                   placeholder="Valores em Reais" value="{{ old('spouse_income') ?? $user->spouse_income }}"/>
                                         </label>
                                     </div>
 
                                     <label class="label">
                                         <span class="legend">Empresa:</span>
                                         <input type="text" name="spouse_company_work" placeholder="Contratante"
-                                               value="{{ old('spouse_company_work') }}"/>
+                                               value="{{ old('spouse_company_work') ?? $user->spouse_company_work }}"/>
                                     </label>
                                 </div>
                             </div>
@@ -448,7 +448,7 @@
                                         <div class="realty_list">
                                             <div class="realty_list_item mb-1">
                                                 <div class="realty_list_item_actions_stats">
-                                                    <img src="assets/images/realty.jpeg" alt="">
+                                                    <img src="{{ url(asset('backend/assets/images/realty.jpeg')) }}" alt="">
                                                     <ul>
                                                         <li>Venda: R$ 450.000,00</li>
                                                         <li>Aluguel: R$ 2.000,00</li>
@@ -541,11 +541,11 @@
                             <div class="label_gc">
                                 <span class="legend">Conceder:</span>
                                 <label class="label">
-                                    <input type="checkbox" name="admin" {{ old('admin') == 'on' || old('admin') == true ? 'checked' : '' }}><span>Administrativo</span>
+                                    <input type="checkbox" name="admin" {{ old('admin') == 'on' || old('admin') == true ? 'checked' :  ($user->admin == 1 ? 'checked' :'') }}><span>Administrativo</span>
                                 </label>
 
                                 <label class="label">
-                                    <input type="checkbox" name="client" {{ old('client') == 'on' || old('client') == true ? 'checked' : '' }}><span>Cliente</span>
+                                    <input type="checkbox" name="client" {{ old('client') == 'on' || old('client') == true ? 'checked' :  ($user->client == 1 ? 'checked' :'') }}><span>Cliente</span>
                                 </label>
                             </div>
                         </div>

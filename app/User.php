@@ -53,6 +53,8 @@ class User extends Authenticatable
         'spouse_occupation',
         'spouse_income',
         'spouse_company_work',
+        'admin',
+        'client',
     ];
 
     /**

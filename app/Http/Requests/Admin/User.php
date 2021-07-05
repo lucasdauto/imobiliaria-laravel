@@ -25,7 +25,7 @@ class User extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:30|max:191',
+            'name' => 'required|min:3|max:191',
             'genre' => 'required|in:male,female,other',
             'document' => 'required|min:11|max:14',
             'document_secondary' => 'required|min:8|max:12',
@@ -48,11 +48,12 @@ class User extends FormRequest
             'city' => 'required',
 
             // Contact
-//            'telephone' => 'min:8|max:14',
+            'telephone' => 'min:8|max:14',
             'cell' => 'required|min:9|max:15',
 
             // Acess
-//            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'min:6|max:16',
 
             // Spouse
             'type_of_communion' => 'required_if:civil_status,married,separated|in:Comunhão Universal de Bens,Comunhão Parcial de Bens,Separação Total de Bens,Participação Final de Aquestos',

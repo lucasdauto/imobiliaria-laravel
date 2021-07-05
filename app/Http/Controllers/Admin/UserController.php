@@ -16,7 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index');
+        $users =  User::all();
+        return view('admin.users.index', [
+            'users' => $users
+        ]);
     }
 
     public function team()
@@ -42,9 +45,9 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $user =  new User();
-        $user->fill($request->all());
-        dd($user->getAttributes(), $request->all());
+        $userCreate =  User::create($request->all());
+
+        dd($userCreate);
 
     }
 
@@ -67,7 +70,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::where('id',$id)->first();
+        return view('admin.users.edit',[
+            'user' => $user
+        ]);
     }
 
     /**
