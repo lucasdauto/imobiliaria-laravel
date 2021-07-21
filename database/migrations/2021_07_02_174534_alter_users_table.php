@@ -26,6 +26,7 @@ class AlterUsersTable extends Migration
             $table->date('date_of_birth')->nullable();
             $table->string('place_of_birth')->nullable();
             $table->string('civil_status')->nullable();
+            $table->string('cover')->nullable();
 
             /** income */
             $table->string('occupation')->nullable();
@@ -60,6 +61,9 @@ class AlterUsersTable extends Migration
             $table->string('spouse_occupation')->nullable();
             $table->double('spouse_income',10,2)->nullable();
             $table->string('spouse_company_work')->nullable();
+
+            $table->boolean('admin')->nullable();
+            $table->boolean('client')->nullable();
         });
     }
 
@@ -71,7 +75,56 @@ class AlterUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            /** perfil */
+            $table->dropColumn('lessor');
+            $table->dropColumn('lessee');
+
+            /** data */
+            $table->dropColumn('genre');
+            $table->dropColumn('document');
+            $table->dropColumn('document_secondary', 20);
+            $table->dropColumn('document_secondary_complement');
+            $table->dropColumn('date_of_birth');
+            $table->dropColumn('place_of_birth');
+            $table->dropColumn('civil_status');
+            $table->dropColumn('cover');
+
+            /** income */
+            $table->dropColumn('occupation');
+            $table->double('income', 10, 2);
+            $table->dropColumn('company_work');
+
+            /** address */
+            $table->dropColumn('zipcode');
+            $table->dropColumn('street');
+            $table->dropColumn('number');
+            $table->dropColumn('neighborhood');
+            $table->dropColumn('state');
+            $table->dropColumn('city');
+            $table->dropColumn('complement');
+
+            /** contact */
+            $table->dropColumn('telephone');
+            $table->dropColumn('cell');
+
+            /** spouse */
+            $table->dropColumn('type_of_communion');
+            $table->dropColumn('spouse_name');
+            $table->dropColumn('spouse_genre');
+            $table->dropColumn('spouse_document');
+            $table->dropColumn('spouse_document_secondary');
+            $table->dropColumn('spouse_document_secondary_complement');
+            $table->dropColumn('spouse_date_of_birth');
+            $table->dropColumn('spouse_place_of_birth');
+            $table->dropColumn('spouse_civil_status');
+
+            /** income spouse */
+            $table->dropColumn('spouse_occupation');
+            $table->double('spouse_income',10,2);
+            $table->dropColumn('spouse_company_work');
+
+            $table->dropColumn('admin');
+            $table->dropColumn('client');
         });
     }
 }

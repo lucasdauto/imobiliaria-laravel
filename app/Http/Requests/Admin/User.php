@@ -52,8 +52,8 @@ class User extends FormRequest
             'cell' => 'required|min:9|max:15',
 
             // Acess
-            'email' => 'required|email|unique:users',
-            'password' => 'min:6|max:16',
+            'email' => 'required|email',
+//            'password' => 'min:6|max:16',
 
             // Spouse
             'type_of_communion' => 'required_if:civil_status,married,separated|in:Comunhão Universal de Bens,Comunhão Parcial de Bens,Separação Total de Bens,Participação Final de Aquestos',
