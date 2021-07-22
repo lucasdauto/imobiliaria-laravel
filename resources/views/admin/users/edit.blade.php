@@ -9,11 +9,11 @@
             <div class="dash_content_app_header_actions">
                 <nav class="dash_content_app_breadcrumb">
                     <ul>
-                        <li><a href="">Dashboard</a></li>
+                        <li><a href="{{ route('admin.home') }}">Dashboard</a></li>
                         <li class="separator icon-angle-right icon-notext"></li>
-                        <li><a href="">Clientes</a></li>
+                        <li><a href="{{ route('admin.users.index') }}">Clientes</a></li>
                         <li class="separator icon-angle-right icon-notext"></li>
-                        <li><a href="" class="text-orange">Editar Cliente</a></li>
+                        <li><a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="text-orange">Editar Cliente</a></li>
                     </ul>
                 </nav>
             </div>
@@ -32,7 +32,7 @@
 
                 @if(session()->exists('message'))
                     @message(['color' => session()->get('color')])
-                        <p class=" icon-asterisk">{{ session()->get('message') }}</p>
+                    <p class=" icon-asterisk">{{ session()->get('message') }}</p>
                     @endmessage
                 @endif
 
@@ -55,6 +55,7 @@
                       enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" value="{{ $user->id }}" name="id">
                     <div class="nav_tabs_content">
                         <div id="data">
                             <div class="label_gc">
@@ -72,7 +73,8 @@
 
                             <label class="label">
                                 <span class="legend">*Nome:</span>
-                                <input type="text" name="name" placeholder="Nome Completo" value="{{ old('name') ?? $user->name }}"/>
+                                <input type="text" name="name" placeholder="Nome Completo"
+                                       value="{{ old('name') ?? $user->name }}"/>
                             </label>
 
                             <div class="label_g2">
@@ -80,12 +82,17 @@
                                     <span class="legend">*Genero:</span>
                                     <select name="genre">
                                         <option value="">Selecione uma opção</option>
-                                        <option value="male" {{ old('genre') == 'male' ? 'selected' : ($user->genre == 'male' ? 'selected' : '') }}>Masculino
+                                        <option
+                                            value="male" {{ old('genre') == 'male' ? 'selected' : ($user->genre == 'male' ? 'selected' : '') }}>
+                                            Masculino
                                         </option>
-                                        <option value="female" {{ old('genre') == 'female' ? 'selected' : ($user->genre == 'female' ? 'selected' : '') }}>
+                                        <option
+                                            value="female" {{ old('genre') == 'female' ? 'selected' : ($user->genre == 'female' ? 'selected' : '') }}>
                                             Feminino
                                         </option>
-                                        <option value="other" {{ old('genre') == 'other' ? 'selected'  : ($user->genre == 'other' ? 'selected' : '') }}>Outros
+                                        <option
+                                            value="other" {{ old('genre') == 'other' ? 'selected'  : ($user->genre == 'other' ? 'selected' : '') }}>
+                                            Outros
                                         </option>
                                     </select>
                                 </label>
@@ -115,7 +122,8 @@
                                 <label class="label">
                                     <span class="legend">*Data de Nascimento:</span>
                                     <input type="tel" name="date_of_birth" class="mask-date"
-                                           placeholder="Data de Nascimento" value="{{ old('date_of_birth') ?? $user->date_of_birth }}"/>
+                                           placeholder="Data de Nascimento"
+                                           value="{{ old('date_of_birth') ?? $user->date_of_birth }}"/>
                                 </label>
 
                                 <label class="label">
@@ -179,7 +187,8 @@
                                         <label class="label">
                                             <span class="legend">*Renda:</span>
                                             <input type="tel" name="income" class="mask-money"
-                                                   placeholder="Valores em Reais" value="{{ old('income') ?? $user->income }}"/>
+                                                   placeholder="Valores em Reais"
+                                                   value="{{ old('income') ?? $user->income }}"/>
                                         </label>
                                     </div>
 
@@ -202,14 +211,16 @@
                                         <label class="label">
                                             <span class="legend">*CEP:</span>
                                             <input type="tel" name="zipcode" class="mask-zipcode zip_code_search"
-                                                   placeholder="Digite o CEP" value="{{ old('zipcode') ?? $user->zipcode }}"/>
+                                                   placeholder="Digite o CEP"
+                                                   value="{{ old('zipcode') ?? $user->zipcode }}"/>
                                         </label>
                                     </div>
 
                                     <label class="label">
                                         <span class="legend">*Endereço:</span>
                                         <input type="text" name="street" class="street"
-                                               placeholder="Endereço Completo" value="{{ old('street') ?? $user->street }}"/>
+                                               placeholder="Endereço Completo"
+                                               value="{{ old('street') ?? $user->street }}"/>
                                     </label>
 
                                     <div class="label_g2">
@@ -229,7 +240,8 @@
                                     <label class="label">
                                         <span class="legend">*Bairro:</span>
                                         <input type="text" name="neighborhood" class="neighborhood"
-                                               placeholder="Bairro" value="{{ old('neighborhood') ?? $user->neighborhood }}"/>
+                                               placeholder="Bairro"
+                                               value="{{ old('neighborhood') ?? $user->neighborhood }}"/>
                                     </label>
 
                                     <div class="label_g2">
@@ -266,7 +278,8 @@
                                         <label class="label">
                                             <span class="legend">*Celular:</span>
                                             <input type="tel" name="cell" class="mask-cell"
-                                                   placeholder="Número do Telefonce com DDD" value="{{ old('cell') ?? $user->cell }}"/>
+                                                   placeholder="Número do Telefonce com DDD"
+                                                   value="{{ old('cell') ?? $user->cell }}"/>
                                         </label>
                                     </div>
                                 </div>
@@ -356,7 +369,8 @@
                                         <label class="label">
                                             <span class="legend">CPF:</span>
                                             <input type="text" class="mask-doc" name="spouse_document"
-                                                   placeholder="CPF do Cliente" value="{{ old('spouse_document') ?? $user->spouse_document }}"/>
+                                                   placeholder="CPF do Cliente"
+                                                   value="{{ old('spouse_document') ?? $user->spouse_document }}"/>
                                         </label>
                                     </div>
 
@@ -364,13 +378,15 @@
                                         <label class="label">
                                             <span class="legend">RG:</span>
                                             <input type="text" name="spouse_document_secondary"
-                                                   placeholder="RG do Cliente" value="{{ old('spouse_document_secondary') ?? $user->spouse_document_secondary }}"/>
+                                                   placeholder="RG do Cliente"
+                                                   value="{{ old('spouse_document_secondary') ?? $user->spouse_document_secondary }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">Órgão Expedidor:</span>
                                             <input type="text" name="spouse_document_secondary_complement"
-                                                   placeholder="Expedição" value="{{ old('spouse_document_secondary_complement') ?? $user->spouse_document_secondary_complement }}"/>
+                                                   placeholder="Expedição"
+                                                   value="{{ old('spouse_document_secondary_complement') ?? $user->spouse_document_secondary_complement }}"/>
                                         </label>
                                     </div>
 
@@ -378,13 +394,15 @@
                                         <label class="label">
                                             <span class="legend">Data de Nascimento:</span>
                                             <input type="tel" class="mask-date" name="spouse_date_of_birth"
-                                                   placeholder="Data de Nascimento" value="{{ old('spouse_date_of_birth') ?? $user->spouse_date_of_birth }}"/>
+                                                   placeholder="Data de Nascimento"
+                                                   value="{{ old('spouse_date_of_birth') ?? $user->spouse_date_of_birth }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">Naturalidade:</span>
                                             <input type="text" name="spouse_place_of_birth"
-                                                   placeholder="Cidade de Nascimento" value="{{ old('spouse_place_of_birth') ?? $user->spouse_place_of_birth }}"/>
+                                                   placeholder="Cidade de Nascimento"
+                                                   value="{{ old('spouse_place_of_birth') ?? $user->spouse_place_of_birth }}"/>
                                         </label>
                                     </div>
 
@@ -392,13 +410,15 @@
                                         <label class="label">
                                             <span class="legend">Profissão:</span>
                                             <input type="text" name="spouse_occupation"
-                                                   placeholder="Profissão do Cliente" value="{{ old('spouse_occupation') ?? $user->spouse_occupation }}"/>
+                                                   placeholder="Profissão do Cliente"
+                                                   value="{{ old('spouse_occupation') ?? $user->spouse_occupation }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">Renda:</span>
                                             <input type="text" class="mask-money" name="spouse_income"
-                                                   placeholder="Valores em Reais" value="{{ old('spouse_income') ?? $user->spouse_income }}"/>
+                                                   placeholder="Valores em Reais"
+                                                   value="{{ old('spouse_income') ?? $user->spouse_income }}"/>
                                         </label>
                                     </div>
 
@@ -420,24 +440,7 @@
 
                                     <div class="companies_list">
                                         <div class="no-content mb-2">Não foram encontrados registros!</div>
-
-                                        <div class="companies_list_item mb-2">
-                                            <p><b>Razão Social:</b> UpInside Treinamentos LTDA</p>
-                                            <p><b>Nome Fantasia:</b> UpInside Treinamentos</p>
-                                            <p><b>CNPJ:</b> 12.3456.789/0001-12 - <b>Inscrição Estadual:</b>1231423421
-                                            </p>
-                                            <p><b>Endereço:</b> Rodovia Dr. Antônio Luiz de Moura Gonzaga, 3339 Bloco A
-                                                Sala
-                                                208</p>
-                                            <p><b>CEP:</b> 88048-301 <b>Bairro:</b> Campeche <b>Cidade/Estado:</b>
-                                                Florianópolis/SC</p>
-                                        </div>
                                     </div>
-
-                                    <p class="text-right">
-                                        <a href="javascript:void(0)" class="btn btn-green btn-disabled icon-building-o">Cadastrar
-                                            Nova Empresa</a>
-                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -451,79 +454,6 @@
 
                                 <div class="app_collapse_content">
                                     <div id="realties">
-                                        <div class="realty_list">
-                                            <div class="realty_list_item mb-1">
-                                                <div class="realty_list_item_actions_stats">
-                                                    <img src="{{ url(asset('backend/assets/images/realty.jpeg')) }}" alt="">
-                                                    <ul>
-                                                        <li>Venda: R$ 450.000,00</li>
-                                                        <li>Aluguel: R$ 2.000,00</li>
-                                                    </ul>
-                                                </div>
-
-                                                <div class="realty_list_item_content">
-                                                    <h4>Casa Residencial - Campeche</h4>
-
-                                                    <div class="realty_list_item_card">
-                                                        <div class="realty_list_item_card_image">
-                                                            <span class="icon-realty-location"></span>
-                                                        </div>
-                                                        <div class="realty_list_item_card_content">
-                                                            <span
-                                                                class="realty_list_item_description_title">Bairro:</span>
-                                                            <span
-                                                                class="realty_list_item_description_content">Campeche</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="realty_list_item_card">
-                                                        <div class="realty_list_item_card_image">
-                                                            <span class="icon-realty-util-area"></span>
-                                                        </div>
-                                                        <div class="realty_list_item_card_content">
-                                                            <span
-                                                                class="realty_list_item_description_title">Área Útil:</span>
-                                                            <span class="realty_list_item_description_content">150m&sup2;</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="realty_list_item_card">
-                                                        <div class="realty_list_item_card_image">
-                                                            <span class="icon-realty-bed"></span>
-                                                        </div>
-                                                        <div class="realty_list_item_card_content">
-                                                            <span
-                                                                class="realty_list_item_description_title">Domitórios:</span>
-                                                            <span class="realty_list_item_description_content">4 Quartos<br><span>Sendo 2 suítes</span></span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="realty_list_item_card">
-                                                        <div class="realty_list_item_card_image">
-                                                            <span class="icon-realty-garage"></span>
-                                                        </div>
-                                                        <div class="realty_list_item_card_content">
-                                                            <span
-                                                                class="realty_list_item_description_title">Garagem:</span>
-                                                            <span
-                                                                class="realty_list_item_description_content">4 Vagas<br><span>Sendo 2 cobertas</span></span>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="realty_list_item_actions">
-                                                    <ul>
-                                                        <li class="icon-eye">1234 Visualizações</li>
-                                                    </ul>
-                                                    <div>
-                                                        <a href="" class="btn btn-blue icon-eye">Visualizar Imóvel</a>
-                                                        <a href="" class="btn btn-green icon-pencil-square-o">Editar
-                                                            Imóvel</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="no-content">Não foram encontrados registros!</div>
                                     </div>
                                 </div>
@@ -547,11 +477,13 @@
                             <div class="label_gc">
                                 <span class="legend">Conceder:</span>
                                 <label class="label">
-                                    <input type="checkbox" name="admin" {{ old('admin') == 'on' || old('admin') == true ? 'checked' :  ($user->admin == 1 ? 'checked' :'') }}><span>Administrativo</span>
+                                    <input type="checkbox"
+                                           name="admin" {{ old('admin') == 'on' || old('admin') == true ? 'checked' :  ($user->admin == 1 ? 'checked' :'') }}><span>Administrativo</span>
                                 </label>
 
                                 <label class="label">
-                                    <input type="checkbox" name="client" {{ old('client') == 'on' || old('client') == true ? 'checked' :  ($user->client == 1 ? 'checked' :'') }}><span>Cliente</span>
+                                    <input type="checkbox"
+                                           name="client" {{ old('client') == 'on' || old('client') == true ? 'checked' :  ($user->client == 1 ? 'checked' :'') }}><span>Cliente</span>
                                 </label>
                             </div>
                         </div>
